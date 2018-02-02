@@ -4,6 +4,7 @@ phases:
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
+      - pip install awscli --upgrade --user
       - aws --version
       - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
       - REPOSITORY_URI=455698428547.dkr.ecr.us-west-2.amazonaws.com/cap-pipeline-apache2-django
