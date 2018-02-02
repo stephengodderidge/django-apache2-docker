@@ -6,7 +6,7 @@ phases:
       - echo Logging in to Amazon ECR...
       - aws --version
       - $(aws ecr get-login --region us-west-2 --no-include-email)
-      - REPOSITORY_URI=455698428547.dkr.ecr.us-west-2.amazonaws.com/cap-pipeline-apache2-django3
+      - REPOSITORY_URI=455698428547.dkr.ecr.us-west-2.amazonaws.com/cap-pipeline-apache2-django
       - IMAGE_TAG=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
   build:
     commands:
@@ -22,6 +22,7 @@ phases:
       - docker push $REPOSITORY_URI:$IMAGE_TAG
       - echo Writing image definitions file...
       - printf '[{"name":"cap-pipeline-apache2-django","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > web.json
+      - cat web.json
 artifacts:
     files: web.json
     
